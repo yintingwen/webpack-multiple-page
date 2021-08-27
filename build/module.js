@@ -16,7 +16,8 @@ module.exports = {
       ,
       filename: 'remoteEntry.js', // 构建出来的文件名
       exposes: { //可选，表示作为 Remote 时，export 哪些属性被消费；
-        'vue': './modules/vue.js'
+        './vue': 'vue',
+        './utils': './src/utils.js'
       }
     })
   ]

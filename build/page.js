@@ -1,38 +1,57 @@
-const webpack = require('webpack')
-const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin")
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin')
-const pages = require('../config/pages')
 
-const compiler = webpack({
-  entry: {
+module.exports = {
+  mode: 'production',
+  entry:  {
     one: './src/pages/one/index.js',
-    two: './src/pages/two/index.js',
+    two: './src/pages/two/index.js'
   },
   output: {
     path: path.resolve(process.cwd(), 'dist'),
     filename: "[name]/index.js"
   },
-  plugins: [
-    ...getHtmlWebpackPlugins(),
-    new ModuleFederationPlugin({
-      name: 'page', //必须，唯一 ID，作为输出的模块名，使用的时通过 ${name}/${expose} 的方式使用；
-      remotes:{
-        'modules':'modules'
+  experiments: {
+    topLevelAwait: true,
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        // 打包业务中公共代码
+        common: {
+          filename: 'chunk-common.[chunkhash].js',
+          chunks: "all",
+          minSize: 1,
+          priority: 0,
+          minChunks: 2, // 同时引用了3次才打包
+        },
+        // 打包node_modules中的文件
+        vendor: {
+          filename: "chunk-vendor.[chunkhash].js",
+          test: /[\\/]node_modules[\\/]/,
+          chunks: "all",
+          priority: 10,
+          minChunks: 2, // 同时引用了2次才打包
+        }
       }
+    }
+  },
+  plugins: [
+    new ModuleFederationPlugin({
+      remotes:{
+        modules:'modules@modules'
+      }
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(process.cwd(), './public/index.html'),
+      filename: path.join(process.cwd(), 'dist', 'one', 'index.html'),
+      chunks: ['one']
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(process.cwd(), './public/index.html'),
+      filename: path.join(process.cwd(), 'dist', 'two', 'index.html'),
+      chunks: ['two']
     })
   ]
-})
-
-function getHtmlWebpackPlugins (page) {
-  return pages.map(item => {
-    return new HtmlWebpackPlugin({
-      template: path.join(process.cwd(), './public/index.html'),
-      filename: path.join(process.cwd(), 'dist', item, 'index.html'),
-    })
-  })
 }
-
-compiler.run((e) => {
-  console.log(e)
-})
