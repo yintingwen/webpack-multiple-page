@@ -1,4 +1,10 @@
-module.exports = [
-  'one',
-  'two'
-]
+module.exports = {
+  one: {
+    entry: '/src/one'
+  },
+  two: {
+    entry: '/src/two'
+  }
+}
+
+
