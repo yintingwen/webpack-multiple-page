@@ -1,16 +1,10 @@
-// {
-//   scripts: 全局script
-//   links：全局link
-//   modules: 全局模块
-// }
-
-
-module.exports = {
+export default {
+  template: '/public/index.html',
   scripts: [
     'vue',
-    'axios'
+    'axios',
   ],
   modules: [
-
+    'vant'
   ]
 }

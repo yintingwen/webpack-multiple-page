@@ -8,11 +8,11 @@ interface module {
 }
 
 interface script {
-  type?: 'src' | 'content',
+  type?: 'file' | 'content',
   value: string
 }
 
 interface link {
-  type?: 'href' | 'content',
+  type?: 'file' | 'content',
   value: string
 }
