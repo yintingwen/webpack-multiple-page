@@ -3,22 +3,10 @@ const scriptCache = {}
 const linkCache = {}
 
 /**
- * 格式化modules配置项
- * @returns
- */
-export function normalizeModules(modules) {
-  const modulesClone = {}
-  Object.keys(modules).forEach((moduleName) => {
-    let module = modules[moduleName]
-    modulesClone[moduleName] = normalizeModule(module)
-  })
-  return modulesClone
-}
-
-/**
  * 转换模块名为脚本字符串
  * @param {*} moduleName 模块名
  * @param {*} modules 格式化之后的modules
+ * @param {boolean} isScript 是否是script
  * @returns
  */
 export function conversionModule(moduleName, modules, isScript) {
@@ -32,7 +20,7 @@ export function conversionModule(moduleName, modules, isScript) {
  * @param {*} module
  * @returns
  */
-function normalizeModule(module) {
+export function normalizeModule(module) {
   if (typeof module === 'string') {
     return { scripts: [{ type: 'file', value: module }], links: [] }
   }

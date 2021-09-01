@@ -5,7 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \\\"Error: no dist/test specified\\\" && exit 1",
+    "build:pages": "webpack --config build/pages.js",
+    "build:page": "webpack --config build/pages.js --env page",
     "build:modules": "webpack --config build/module.js"
   },
   "keywords": [],

@@ -1,21 +1,14 @@
 import { getFullPath, mergeArray } from './common.js'
-import { conversionModule } from './modules.js'
+import { conversionModule } from './module.js'
 
-export function normalizePages(pages, app, modules) {
-  return Object.keys(pages).map((pageName) => {
-    let page = pages[pageName]
-    return normalizePage(pageName, page, app, modules)
-  })
-}
-
-function normalizePage(pageName, pageConfig, app, modules) {
+export function normalizePage(pageName, pageConfig, app, modules) {
   const sourcePage = typeof pageConfig === 'string' ? { entry: pageConfig } : pageConfig
   const page = createPage(pageName, sourcePage, app)
   conversionPageModules(page, modules)
   return page
 }
 
-function createPage(name, { entry, output, template , scripts, links, modules }, app) {
+export function createPage(name, { entry, output, template , scripts, links, modules }, app) {
   const page = {}
   page.name = name
   page.entry = getFullPath(entry)
@@ -26,7 +19,7 @@ function createPage(name, { entry, output, template , scripts, links, modules },
   return page
 }
 
-function conversionPageModules (page, modules) {
+export function conversionPageModules (page, modules) {
   const { scripts = [], links = [] } = page
   page.scripts = mergeArray(...scripts.map(module => conversionModule(module, modules, true)))
   page.links = mergeArray(...links.map(module => conversionModule(module, modules, false)))
