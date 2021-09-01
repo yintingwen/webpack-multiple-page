@@ -1,4 +1,4 @@
-import { createError } from './common.js'
+import { error } from './common.js'
 const scriptCache = {}
 const linkCache = {}
 
@@ -48,7 +48,7 @@ function normalizeModuleScriptLink(list, type) {
       return createModuleScriptLink(item)
     }
     if (!item.type) {
-      createError(`${type}使用对象配置时必须带有type`)
+      error(`${type}使用对象配置时必须带有type`)
     }
     return item
   })
