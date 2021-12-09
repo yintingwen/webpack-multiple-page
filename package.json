@@ -7,7 +7,7 @@
   "scripts": {
     "build": "webpack --config build/pages.js --env page",
     "build:pages": "webpack --config build/pages.js",
-    "build:modules": "webpack --config build/module.js"
+    "build:vendor": "webpack --config build/vendor.js"
   },
   "keywords": [],
   "author": "",

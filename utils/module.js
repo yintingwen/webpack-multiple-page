@@ -41,11 +41,11 @@ export function normalizeModule(module) {
 function normalizeModuleScriptLink(list, type) {
   if (!list) return []
   if (typeof list === 'string') {
-    return [createModuleScriptLink(list)]
+    return [createModuleInstance(list)]
   }
   return list.map((item) => {
     if (typeof item === 'string') {
-      return createModuleScriptLink(item)
+      return createModuleInstance(item)
     }
     if (!item.type) {
       error(`${type}使用对象配置时必须带有type`)
@@ -60,7 +60,7 @@ function normalizeModuleScriptLink(list, type) {
  * @param {*} value
  * @returns
  */
-function createModuleScriptLink(value) {
+function createModuleInstance(value, type = 'file') {
   return {
     type,
     value,
