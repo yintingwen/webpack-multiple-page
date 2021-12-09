@@ -3,7 +3,7 @@ import { error, getFullPath } from '../utils/common.js'
 import { getBuildPages, getWebpackPagesConfig } from '../utils/build.js'
 
 import modulesConfig from '../config/modules.js'
-import appConfig from '../config/app.js'
+import globalConfig from '../config/global.js'
 import pagesConfig from '../config/pages.js'
 
 export default ( env ) => {
@@ -14,7 +14,7 @@ export default ( env ) => {
   }
 
   const modules = normalizeModules(modulesConfig)
-  const app = normalizeApp(appConfig)
+  const app = normalizeApp(globalConfig)
   const pages = normalizePages(buildPagesConfig, app, modules)
   const {entry, htmlPlugins} = getWebpackPagesConfig(pages)
 
@@ -29,7 +29,7 @@ export default ( env ) => {
       topLevelAwait: true,
     },
     externals: {
-      vue: 'Vue',
+      // vue: 'Vue',
     },
     plugins: [...htmlPlugins],
   }

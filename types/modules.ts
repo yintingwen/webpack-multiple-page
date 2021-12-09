@@ -1,19 +1,14 @@
 export interface Modules {
-  [ moduleName: string ]: string | module[]
+  [ moduleName: string ]: string | Module | ModuleContent[]
 }
 
-interface module {
-  scripts?: string | script[]
-  links?: string | link[]
+interface Module {
+  scripts?: string | ModuleContent[]
+  links?: string | ModuleContent[]
 }
 
-interface script {
+interface ModuleContent {
+  isLink: Boolean,
   type?: 'file' | 'content',
   value: string
 }
-
-interface link {
-  type?: 'file' | 'content',
-  value: string
-}
-
